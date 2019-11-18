@@ -78,7 +78,32 @@
 }
 
 .element-body__cell {
-    text-align: center;
+    position: relative;
+    height: 25px;
+    box-sizing: border-box;
 
     background: rgb(156, 156, 156);
+
+    text-align: center;
+}
+.element-body__cell:first-child {
+    width: 100px;
+    box-sizing: border-box;
+}
+
+.element-body-task {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    background: rgba(255, 255, 255, 0.8);
 }
