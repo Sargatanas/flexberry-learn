@@ -3,80 +3,83 @@
  <head>
   <meta charset="utf-8" />
   <title>Практическое задание №2</title>
+  <link rel="stylesheet" href="css/style.css">
  </head>
  <body>
-  <div class="container">
+  <div class="form">
       <header class="form-header">
-          <form>
-              <label for="team-id">
-                  Номер бригады:
-              </label>
-              <input type="number" id="team-id" name="id">
-
-              <label for="data">
-                  Дата:
-              </label>
-              <input type="date" id="data" name="id">
-          </form>
+            <label class="form-header__element" for="team-id">
+                    Номер бригады:
+                    <input type="number" id="team-id" name="id">
+            </label>
+  
+            <label class="form-header__element" for="data">
+                    Дата:
+                    <input type="date" id="data" name="id">
+            </label>
+            
+            <button class="form-header__element form-header__element_button">
+                Показать
+            </button>
       </header>
 
       <main class="form-body">
-          <table class="form-body__element">
+          <div class="form-body__element">
               <div class="element-header">
-                  <div class="element-header__day">
-                      ПН
+                    <div class="element-header__cell element-header__cell_day">
+                        ПН
                     </div>
-                  <div class="element-header__data">
-                      18.11.2019
-                  </div>
-                  <div class="element-header__total-tasks">
-                      2
-                  </div>
+                    <div class="element-header__cell element-header__cell_data">
+                        18.11.2019
+                    </div>
+                    <div class="element-header__cell element-header__cell_total-tasks">
+                        Всего задач: 1
+                    </div>
               </div>
-              <tr class="element-header">
-                    <th class="element-body__time">
+              <table class="element-body">
+                  <tr class="element-body__row">
+                    <th class="element-body__cell">
                         Время начала работ
                     </th>
-                    <th class="element-body__plane-period">
-                        Плановая длительность
+                    <th class="element-body__cell">
+                        Запланированное время выполнения (в часах)
                     </th>
-                    <th class="element-body__plane-period">
+                    <th class="element-body__cell">
                         Время окончания работ
                     </th>
-                    <th class="element-body__task">
+                    <th class="element-body__cell">
                         Задача
                     </th>
-                    <th class="element-body__adress">
+                    <th class="element-body__cell">
                         Адрес
                     </th>
-                    <th class="element-body__real-period">
-                        Реальная длительность
+                    <th class="element-body__cell">
+                        Фактическое время выполнения (в часах)
                     </th>
               </tr>
-              <tr class="element-body">
-                  <td class="element-body__time">
+              <tr class="element-body__row">
+                  <td class="element-body__cell">
                       13:00
                   </td>
-                  <th class="element-body__plane-period">
-                      4:00
-                  </th>
-                  <th class="element-body__plane-period">
+                  <td class="element-body__cell">
+                      4
+                  </td>
+                  <td class="element-body__cell">
                       17:00
-                  </th>
-                  <td class="element-body__task">
+                  </td>
+                  <td class="element-body__cell">
                       поймать мышь
                   </td>
-                  <td class="element-body__adress">
+                  <td class="element-body__cell">
                       Пушкина 44
                   </td>
-                  <td class="element-body__plane-period">
-                      3
-                  </td>
-                  <th class="element-body__real-period">
+                  <th class="element-body__cell">
                       -
                   </th>
                 </tr>
             </table>
+          </div>
+          
       </main>
   </div>
  </body>

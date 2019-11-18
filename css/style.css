@@ -1,0 +1,84 @@
+.form {
+    width: 100%;
+    background: rgb(235, 235, 235);
+}
+
+.form-header {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 20px;
+
+    background: rgb(216, 216, 216);
+}
+
+.form-header__element {
+    margin-bottom: 20px;
+}
+.form-header__element:last-child {
+    margin-bottom: 0;
+}
+.form-header__element_button {
+    max-width: 200px;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 20px;
+
+    background: rgb(216, 216, 216);
+}
+
+.form-body__element {
+    width: 100%;
+    margin-bottom: 20px;
+
+    background: rgb(184, 184, 184);
+}
+.form-body__element:last-child {
+    margin-bottom: 0;
+}
+
+.element-header {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.element-header__cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100px;
+    height: 30px;
+
+    margin-right: 10px;
+    padding: 5px 10px;
+
+    background: rgb(156, 156, 156);
+}
+.element-header__cell:last-child {
+    margin-right: 0;
+}
+
+.element-header__cell_total-tasks {
+    margin-left: auto;
+}
+
+.element-body {
+    width: 100%;
+    align-items: center;
+}
+
+.element-body__cell {
+    text-align: center;
+
+    background: rgb(156, 156, 156);
+}
