@@ -1,11 +1,11 @@
 [
     {
-        "number": "1",
+        "teamId": "1",
         "tasks": [
             {
-                "date": "18.11.2019",
+                "date": "2019-11-18",
                 "time": {
-                    "hour": "10",
+                    "hours": "10",
                     "minutes": "35"
                 },
                 "timePlane": "1.5",
@@ -15,7 +15,100 @@
                     "housing": "",
                     "flat": "12"
                 },
-                "details": "подключить новую раковину"
+                "details": [
+                    "подключить новую раковину",
+                    "прочистить трубу на кухне"
+                ]
+            },
+            {
+                "date": "2019-11-18",
+                "time": {
+                    "hours": "13",
+                    "minutes": "00"
+                },
+                "timePlane": "3",
+                "adress": {
+                    "street": "Пушкина",
+                    "house": "44",
+                    "housing": "",
+                    "flat": "12"
+                },
+                "details": [
+                    "вернуться за инструментами"
+                ]
+            },
+            {
+                "date": "2019-11-24",
+                "time": {
+                    "hours": "14",
+                    "minutes": "20"
+                },
+                "timePlane": "4",
+                "adress": {
+                    "street": "Островского",
+                    "house": "37",
+                    "housing": "1",
+                    "flat": "24"
+                },
+                "details": [
+                    "устранить протечку"
+                ]
+            },
+            {
+                "date": "2019-11-26",
+                "time": {
+                    "hours": "17",
+                    "minutes": "00"
+                },
+                "timePlane": "1",
+                "adress": {
+                    "street": "Островского",
+                    "house": "37",
+                    "housing": "1",
+                    "flat": "24"
+                },
+                "details": [
+                    "починить кран"
+                ]
+            }
+        ]
+    },
+    {
+        "teamId": "2",
+        "tasks": [
+            {
+                "date": "2019-11-20",
+                "time": {
+                    "hours": "10",
+                    "minutes": "35"
+                },
+                "timePlane": "1.5",
+                "adress": {
+                    "street": "Пушкина",
+                    "house": "44",
+                    "housing": "",
+                    "flat": "12"
+                },
+                "details": [
+                    "подключить новую раковину"
+                ]
+            },
+            {
+                "date": "2019-11-29",
+                "time": {
+                    "hours": "17",
+                    "minutes": "00"
+                },
+                "timePlane": "1",
+                "adress": {
+                    "street": "Островского",
+                    "house": "37",
+                    "housing": "1",
+                    "flat": "24"
+                },
+                "details": [
+                    "починить кран"
+                ]
             }
         ]
     }
