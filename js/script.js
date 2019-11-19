@@ -2,7 +2,7 @@
 
 var json = [
     {
-        "number": "1",
+        "teamId": "1",
         "tasks": [
             {
                 "date": "2019-11-18",
@@ -50,13 +50,53 @@ var json = [
                 "details": "починить кран"
             }
         ]
+    },
+    {
+        "teamId": "2",
+        "tasks": [
+            {
+                "date": "2019-11-20",
+                "time": {
+                    "hours": "10",
+                    "minutes": "35"
+                },
+                "timePlane": "1.5",
+                "adress": {
+                    "street": "Пушкина",
+                    "house": "44",
+                    "housing": "",
+                    "flat": "12"
+                },
+                "details": "подключить новую раковину"
+            },
+            {
+                "date": "2019-11-26",
+                "time": {
+                    "hours": "17",
+                    "minutes": "00"
+                },
+                "timePlane": "1",
+                "adress": {
+                    "street": "Островского",
+                    "house": "37",
+                    "housing": "1",
+                    "flat": "24"
+                },
+                "details": "починить кран"
+            }
+        ]
     }
 ];
 
+(function() {
+    let button = document.getElementById('button');
+    button.addEventListener('click', function() {
+        createSchedule(json);
+    });
+})();
+
 const week = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
 const weekEN = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-
-createSchedule(json);
 
 /*(async function () {
      let data = await loadJson();
@@ -87,70 +127,77 @@ async function loadJson() {
     return await promise;
 }
 
-function createSchedule(data) {  
-    let deadlines = generationTable();
+function createSchedule(data) {   
+    let table = document.getElementById('table');
+    table.innerHTML = '';
+    
+    let teamId = document.getElementById('add-team-id').value;
 
     data.forEach(dataElement => {
-        dataElement.tasks.forEach(task => {
-            let time = task.time;
-            let date = getDate(0, -1, new Date(task.date));
+        if (dataElement.teamId === teamId) {
+            let deadlines = generationTable();
+            dataElement.tasks.forEach(task => {
+                let time = task.time;
+                let date = getDate(0, -1, new Date(task.date));
 
-            if (date >= deadlines.firstDate && date <= deadlines.lastDate) {
+                if (date >= deadlines.firstDate && date <= deadlines.lastDate) {
+                    date.setHours(time.hours);
+                    date.setMinutes(time.minutes);
 
-                date.setHours(time.hours);
-                date.setMinutes(time.minutes);
+                    let shift = (Number(time.minutes) / 60) * 25;
+                    let size = 25 * Number(task.timePlane);
 
-                let shift = (Number(time.minutes) / 60) * 25;
-                let size = 25 * Number(task.timePlane);
+                    let day = date.getDay() - 1;
+                    day = day === -1 ? 6: day;
+                    day = weekEN[day];
 
-                let day = date.getDay() - 1;
-                day = day === -1 ? 6: day;
-                day = weekEN[day];
+                    let template = document.getElementById('table-template-task').content.cloneNode(true);
+                    let cell = document.getElementById(`${day}-${time.hours}`);
+                    cell.append(template);
+                    
+                    let temp = '';
 
-                let template = document.getElementById('table-template-task').content.cloneNode(true);
-                let cell = document.getElementById(`${day}-${time.hours}`);
-                cell.append(template);
-                
-                let temp = '';
+                    temp = document.getElementById('adress');
+                    temp.innerHTML += getFullAdress(task.adress);
+                    temp.removeAttribute('id');
+                    
+                    temp = document.getElementById('details');
+                    let details = task.details;
+                    details = details[0].toUpperCase() + details.slice(1);
+                    temp.innerHTML += details;
+                    temp.removeAttribute('id');
+                    
+                    temp = document.getElementById('task');
+                    temp.style.top = `${shift}px`;
 
-                temp = document.getElementById('adress');
-                temp.innerHTML += getFullAdress(task.adress);
-                temp.removeAttribute('id');
-                
-                temp = document.getElementById('details');
-                let details = task.details;
-                details = details[0].toUpperCase() + details.slice(1);
-                temp.innerHTML += details;
-                temp.removeAttribute('id');
-                
-                temp = document.getElementById('task');
-                temp.style.top = `${shift}px`;
-
-                /* Изменение размера просматриваемого окна */
-                let realSize = temp.clientHeight;
-                if (realSize > size) {
-                    temp.classList.add('element-body-task_resize');
-                    temp.addEventListener('click', function() {
-                        if (temp.classList.contains('element-body-task_resize')) {
-                            temp.style.height = `${realSize}px`;
-                            temp.classList.add('element-body-task_open');
-                            temp.classList.remove('element-body-task_resize');
-                        } else {
-                            temp.style.height = `${size}px`;
-                            temp.classList.remove('element-body-task_open');
-                            temp.classList.add('element-body-task_resize');
-                        }
-                    });
-                }
-                temp.style.height = `${size}px`;
-                temp.removeAttribute('id');
-            }            
-        });        
+                    /* Изменение размера просматриваемого окна */
+                    let realSize = temp.clientHeight;
+                    if (realSize > size) {
+                        temp.classList.add('element-body-task_resize');
+                        temp.addEventListener('click', function() {
+                            if (temp.classList.contains('element-body-task_resize')) {
+                                temp.style.height = `${realSize}px`;
+                                temp.classList.add('element-body-task_open');
+                                temp.classList.remove('element-body-task_resize');
+                            } else {
+                                temp.style.height = `${size}px`;
+                                temp.classList.remove('element-body-task_open');
+                                temp.classList.add('element-body-task_resize');
+                            }
+                        });
+                    }
+                    temp.style.height = `${size}px`;
+                    temp.removeAttribute('id');
+                }            
+            });  
+        }
+               
     });    
 };
 
 function generationTable() {
     let table = document.getElementById('table');
+
     let firstDate = '';
     let lastDate = '';
 

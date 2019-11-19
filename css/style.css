@@ -1,5 +1,6 @@
 .form {
     width: 100%;
+    font-size: 0.9em;
 }
 
 .form-header {
@@ -55,7 +56,6 @@
     display: flex;
     box-sizing: border-box;
     margin-bottom: 10px;
-    cursor: pointer;
 }
 
 .element-header__cell {
@@ -126,6 +126,7 @@
 
     background: white; 
     
+    cursor: pointer;
     transition-duration: 0.3s;
 }
 .element-body-task_resize:before {
@@ -165,7 +166,6 @@
     background: white url('../resources/img/double-top.png') no-repeat 50% 50%;
     background-size: 100% auto;
 }
-
 
 .element-body-task__header {
     margin-right: 10px;
