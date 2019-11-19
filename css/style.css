@@ -49,7 +49,10 @@
 
 .element-header {
     display: flex;
+
     margin-bottom: 10px;
+
+    cursor: pointer;
 }
 
 .element-header__cell {
@@ -106,4 +109,9 @@
     padding: 10px;
 
     background: rgba(255, 255, 255, 0.8);
+}
+
+.element-body-task__header {
+    margin-right: 10px;
+    font-weight: bold;
 }

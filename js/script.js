@@ -1,15 +1,38 @@
 "use strict";
 
-class Task {
-    constructor(timePlane, details, adress) {
-        this.timePlane = timePlane;
-        this.adress = adress;
-        this.details = details;
-    }
+(async function () {
+    let data = await loadJson();
+    data = JSON.parse(data);
+
+    console.log(data);
+})();
+
+async function loadJson() {
+    let promise = new Promise((resolve, reject) => {
+        let request = new XMLHttpRequest();
+        request.open('GET', './resources/json/tasks.json');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.withCredentials = true;
+        request.send();
+
+        request.onreadystatechange = function() {
+            if (request.readyState !== 4) return;
+
+            if (request.status === 200) {
+                resolve(request.response);
+            } else {
+                reject('error');
+            }
+        };
+
+    });
+
+    return await promise;
 }
 
-(function() {  
-    generationTable()
+
+function createSchedule(data) {  
+    generationTable();
 
     let adress = {
         street: 'Пушкина',
@@ -24,24 +47,28 @@ class Task {
         minute: 30
     }
     let day = 'mon';
-    let place = document.getElementById(`${day}-${time.hour}`);
     let shift = (time.minute / 60) * 25;
     let size = 25 * task.timePlane - 20;
 
-    let template = `<div class="element-body-task" style="height: ${size}px; top: ${shift}"> 
-                        <div class="element-body-task__detail">
-                            <span class="element-body-task__header">Адрес:</span>
-                                ${task.adress.street}, д. ${task.adress.house}, корп. ${task.adress.housing}, кв. ${task.adress.flat}
-                        </div>
-                        <div class="element-body-task__detail">
-                            <span class="element-body-task__header">Задача:</span>
-                                ${task.details}
-                        </div>
-                    </div>`;
+    let template = document.getElementById('table-template-task').content.cloneNode(true);
+    let cell = document.getElementById(`${day}-${time.hour}`);
+    cell.append(template);
 
-    /* place.innerHTML = template;  */
-    
-})();
+    let temp = document.getElementById('adress');
+    temp.innerText += getFullAdress(task.adress);
+    temp.removeAttribute('id');
+
+    temp = document.getElementById('details');
+    temp.innerText += task.detail;
+    temp.removeAttribute('id');
+
+    temp = document.getElementById('task');
+    temp.style.height = `${size}px`;
+    temp.style.top = `${shift}px`;
+    temp.removeAttribute('id');
+
+    /* place.innerHTML = template;  */    
+};
 
 function generationTable() {
     let table = document.getElementById('table');
@@ -57,15 +84,9 @@ function generationTable() {
         temp.innerText = day.toUpperCase();
         temp.removeAttribute('id');
 
-        let date = getDate(week.length, index);
-        console.log(date);
-        
-        temp = document.getElementById('date');
-        temp.innerText = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
-        temp.innerText += '.';
-        temp.innerText += (date.getMonth() + 1) <= 9 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
-        temp.innerText += '.';
-        temp.innerText += date.getFullYear();
+        let date = getDate(week.length, index);        
+        temp = document.getElementById('date');        
+        temp.innerText = getFullDate(date);
         temp.removeAttribute('id');
         
         let tableContent = document.getElementById('table-content');
@@ -75,9 +96,12 @@ function generationTable() {
             tableContent.append(templateTableRow);
             temp = document.getElementById('time');
             temp.innerText = i < 9 ? '0' + i + ':00': i + ':00';
-            temp.removeAttribute('id');     
+            temp.removeAttribute('id');
+            
+            temp = document.getElementById('content');
+            temp.id = weekEN[index] + '-' + i;
         }
-        tableContent.removeAttribute('id');  
+        tableContent.removeAttribute('id');
     });
 }
 
@@ -91,4 +115,18 @@ function getDate(totalIndex, index) {
     
     currentDate.setDate(currentDate.getDate() + dateShift);
     return currentDate;
+}
+
+function getFullDate(date) {
+    let fullDate = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
+    fullDate += '.';
+    fullDate += (date.getMonth() + 1) <= 9 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+    fullDate += '.';
+    fullDate += date.getFullYear();
+
+    return fullDate;
+}
+
+function getFullAdress(adress) {
+    return `ул. ${adress.street}, д. ${adress.house}, корп. ${adress.housing}, кв. ${adress.flat}`;
 }

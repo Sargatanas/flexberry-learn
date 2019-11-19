@@ -26,6 +26,7 @@
       <main class="form-body" id="table"></main>
   </div>
 
+    <!-- Шаблон блока на день -->
     <template id="table-template">
         <div class="form-body__element">
             <div class="element-header">
@@ -48,13 +49,24 @@
         </div>
     </template>
 
+    <!-- Шаблон строки -->
     <template id='table-template-row'>
         <tr class="element-body__row">
-            <td class="element-body__cell">
-                <span id="time"></span>
-            </td>
+            <td class="element-body__cell" id="time"></td>
             <td class="element-body__cell" id="content"></td>
         </tr>
+    </template>
+
+    <!-- Шаблон записи -->
+    <template id='table-template-task'>
+        <div class="element-body-task" id="task"> 
+            <div class="element-body-task__detail" id="adress">
+                <span class="element-body-task__header">Адрес:</span>
+            </div>
+            <div class="element-body-task__detail" id="details">
+                <span class="element-body-task__header">Задача:</span>
+            </div>
+        </div>
     </template>
 
   <script type="text/javascript" src="js/script.js"></script>

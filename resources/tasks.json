@@ -1,0 +1,22 @@
+[
+    {
+        "number": "1",
+        "tasks": [
+            {
+                "date": "18.11.2019",
+                "time": {
+                    "hour": "10",
+                    "minutes": "35"
+                },
+                "timePlane": "1.5",
+                "adress": {
+                    "street": "Пушкина",
+                    "house": "44",
+                    "housing": "",
+                    "flat": "12"
+                },
+                "details": "подключить новую раковину"
+            }
+        ]
+    }
+]
