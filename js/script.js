@@ -9,7 +9,7 @@ const weekEN = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
     let button = document.getElementById('button');
     button.addEventListener('click', function() {
-        createSchedule(json);
+        createSchedule(data);
     });
 })();
 
