@@ -10,7 +10,7 @@
       <header class="form-header">
             <label class="form-header__element" for="team-id">
                     Номер бригады:
-                    <input type="number" id="add-team-id" name="id" value="2">
+                    <input type="number" id="add-team-id" name="id" value="1">
             </label>
   
             <label class="form-header__element" for="data">
@@ -60,11 +60,11 @@
     <!-- Шаблон записи -->
     <template id='table-template-task'>
         <div class="element-body-task" id="task"> 
-            <div class="element-body-task__detail" id="details">
-                <span class="element-body-task__header">Задачи:</span>
-            </div>
-            <div class="element-body-task__detail" id="adress">
-                <span class="element-body-task__header">Адрес:</span>
+            <ol class="element-body-task-detail" id="details">
+                <li class="element-body-task-detail__header" value="0">Задачи:</li>
+            </ol>
+            <div class="element-body-task-detail" id="adress">
+                <span class="element-body-task-detail__header">Адрес:</span>
             </div>
         </div>
     </template>

@@ -17,7 +17,10 @@ var json = [
                     "housing": "",
                     "flat": "12"
                 },
-                "details": "подключить новую раковину"
+                "details": [
+                    "подключить новую раковину",
+                    "прочистить трубу на кухне"
+                ]
             },
             {
                 "date": "2019-11-24",
@@ -32,7 +35,9 @@ var json = [
                     "housing": "1",
                     "flat": "24"
                 },
-                "details": "устранить протечку"
+                "details": [
+                    "устранить протечку"
+                ]
             },
             {
                 "date": "2019-11-26",
@@ -47,7 +52,9 @@ var json = [
                     "housing": "1",
                     "flat": "24"
                 },
-                "details": "починить кран"
+                "details": [
+                    "починить кран"
+                ]
             }
         ]
     },
@@ -67,7 +74,9 @@ var json = [
                     "housing": "",
                     "flat": "12"
                 },
-                "details": "подключить новую раковину"
+                "details": [
+                    "подключить новую раковину"
+                ]
             },
             {
                 "date": "2019-11-29",
@@ -82,7 +91,9 @@ var json = [
                     "housing": "1",
                     "flat": "24"
                 },
-                "details": "починить кран"
+                "details": [
+                    "починить кран"
+                ]
             }
         ]
     }
@@ -157,9 +168,6 @@ function createAllTasks(data, teamId, userDate) {
                     date.setHours(time.hours);
                     date.setMinutes(time.minutes);
 
-                    let shift = (Number(time.minutes) / 60) * 25;
-                    let size = 25 * Number(task.timePlane);
-
                     let day = date.getDay() - 1;
                     day = day === -1 ? 6: day;
                     day = weekEN[day];
@@ -175,15 +183,21 @@ function createAllTasks(data, teamId, userDate) {
                     temp.removeAttribute('id');
                     
                     temp = document.getElementById('details');
-                    let details = task.details;
-                    details = details[0].toUpperCase() + details.slice(1);
-                    temp.innerHTML += details;
-                    temp.removeAttribute('id');
+                    task.details.forEach(detail => {
+                        let li = document.createElement('li');
+                        li.innerHTML = detail[0].toUpperCase() + detail.slice(1);
+                        li.classList.add('element-body-task-detail__element');
+                        temp.append(li);
+                    });
+                    temp.removeAttribute('id');                    
                     
+                    /* Изменение размера просматриваемого окна */
+                    let shift = (Number(time.minutes) / 60) * 25;
+                    let size = 30 * Number(task.timePlane);
+
                     temp = document.getElementById('task');
                     temp.style.top = `${shift}px`;
 
-                    /* Изменение размера просматриваемого окна */
                     let realSize = temp.clientHeight;
                     if (realSize > size) {
                         temp.classList.add('element-body-task_resize');

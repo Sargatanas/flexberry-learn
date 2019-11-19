@@ -91,7 +91,7 @@
 
 .element-body__cell {
     position: relative;
-    height: 25px;
+    height: 30px;
     box-sizing: border-box;
 
     background: rgb(187, 206, 224);
@@ -125,6 +125,7 @@
     padding: 10px 30px 10px 10px;
 
     background: white; 
+    box-shadow: 5px 5px 10px 0 rgba(0,0,0,0.5);
     
     cursor: pointer;
     transition-duration: 0.3s;
@@ -167,7 +168,17 @@
     background-size: 100% auto;
 }
 
-.element-body-task__header {
+.element-body-task-detail {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+.element-body-task-detail__element {
+    margin-left: 15px;
+}
+
+.element-body-task-detail__header {
     margin-right: 10px;
     font-weight: bold;
+    list-style-type: none;
 }
