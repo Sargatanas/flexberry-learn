@@ -229,10 +229,12 @@ function createAllTasks(data, teamId, userDate) {
                         temp.addEventListener('click', function() {
                             if (temp.classList.contains('element-body-task_resize')) {
                                 temp.style.height = `${realSize}px`;
+                                temp.style.zIndex = 100;
                                 temp.classList.add('element-body-task_open');
                                 temp.classList.remove('element-body-task_resize');
                             } else {
                                 temp.style.height = `${size}px`;
+                                temp.style.zIndex = 1;
                                 temp.classList.remove('element-body-task_open');
                                 temp.classList.add('element-body-task_resize');
                             }
