@@ -108,6 +108,9 @@
 .form-body__element_current .element-body__cell {
     background: rgb(186, 223, 161);
 }
+.element-header__cell-content {
+    margin-left: 5px;
+}
 
 .element-body-task {
     position: absolute;

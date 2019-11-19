@@ -3,17 +3,140 @@
 const week = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
 const weekEN = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-(async function () {
+const json = [
+    {
+        "teamId": "1",
+        "tasks": [
+            {
+                "date": "2019-11-18",
+                "time": {
+                    "hours": "10",
+                    "minutes": "35"
+                },
+                "timePlane": "1.5",
+                "adress": {
+                    "street": "Пушкина",
+                    "house": "44",
+                    "housing": "",
+                    "flat": "12"
+                },
+                "details": [
+                    "подключить новую раковину",
+                    "прочистить трубу на кухне"
+                ]
+            },
+            {
+                "date": "2019-11-18",
+                "time": {
+                    "hours": "13",
+                    "minutes": "00"
+                },
+                "timePlane": "3",
+                "adress": {
+                    "street": "Пушкина",
+                    "house": "44",
+                    "housing": "",
+                    "flat": "12"
+                },
+                "details": [
+                    "вернуться за инструментами"
+                ]
+            },
+            {
+                "date": "2019-11-24",
+                "time": {
+                    "hours": "14",
+                    "minutes": "20"
+                },
+                "timePlane": "4",
+                "adress": {
+                    "street": "Островского",
+                    "house": "37",
+                    "housing": "1",
+                    "flat": "24"
+                },
+                "details": [
+                    "устранить протечку"
+                ]
+            },
+            {
+                "date": "2019-11-26",
+                "time": {
+                    "hours": "17",
+                    "minutes": "00"
+                },
+                "timePlane": "1",
+                "adress": {
+                    "street": "Островского",
+                    "house": "37",
+                    "housing": "1",
+                    "flat": "24"
+                },
+                "details": [
+                    "починить кран"
+                ]
+            }
+        ]
+    },
+    {
+        "teamId": "2",
+        "tasks": [
+            {
+                "date": "2019-11-20",
+                "time": {
+                    "hours": "10",
+                    "minutes": "35"
+                },
+                "timePlane": "1.5",
+                "adress": {
+                    "street": "Пушкина",
+                    "house": "44",
+                    "housing": "",
+                    "flat": "12"
+                },
+                "details": [
+                    "подключить новую раковину"
+                ]
+            },
+            {
+                "date": "2019-11-29",
+                "time": {
+                    "hours": "17",
+                    "minutes": "00"
+                },
+                "timePlane": "1",
+                "adress": {
+                    "street": "Островского",
+                    "house": "37",
+                    "housing": "1",
+                    "flat": "24"
+                },
+                "details": [
+                    "починить кран"
+                ]
+            }
+        ]
+    }
+];
+
+(function () {
+    let button = document.getElementById('button');
+    button.addEventListener('click', function() {
+        createSchedule(json);
+    });
+})();
+
+/* (async function () {
     let data = await loadJson();
     data = JSON.parse(data);
 
     let button = document.getElementById('button');
     button.addEventListener('click', function() {
-        createSchedule(data);
+        createSchedule(json);
     });
-})();
+})(); */
 
-async function loadJson() {
+/* async function loadJson() {
     let promise = new Promise((resolve, reject) => {
         let request = new XMLHttpRequest();
         request.open('GET', './resources/json/tasks.json');
@@ -34,7 +157,7 @@ async function loadJson() {
     });
 
     return await promise;
-}
+} */
 
 function createSchedule(data) {   
     let table = document.getElementById('table');
@@ -65,6 +188,8 @@ function createAllTasks(data, teamId, userDate) {
                 if (date.getTime() >= deadlines.firstDate.getTime() && date.getTime() <= deadlines.lastDate.getTime()) {
                     date.setHours(time.hours);
                     date.setMinutes(time.minutes);
+                    
+                    let temp = '';
 
                     let day = date.getDay() - 1;
                     day = day === -1 ? 6: day;
@@ -73,8 +198,9 @@ function createAllTasks(data, teamId, userDate) {
                     let template = document.getElementById('table-template-task').content.cloneNode(true);
                     let cell = document.getElementById(`${day}-${time.hours}`);
                     cell.append(template);
-                    
-                    let temp = '';
+
+                    let total = document.getElementById(`${day}-total`);
+                    total.innerText = Number(total.innerText) + 1;
 
                     /* Адрес и детали */
                     temp = document.getElementById('adress');
@@ -158,6 +284,11 @@ function createTable(userDate) {
         temp = document.getElementById('date');        
         temp.innerText = getFullDate(date);
         temp.removeAttribute('id');
+
+        /* Всего задач */
+        temp = document.getElementById('total-tasks');
+        temp.id = `${weekEN[index]}-total`;
+        temp.innerHTML = '0';
         
         /* Заполнение временных строк */
         let tableContent = document.getElementById('table-content');
