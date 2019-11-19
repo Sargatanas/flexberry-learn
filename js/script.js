@@ -55,7 +55,7 @@ function createSchedule(data) {
 function createAllTasks(data, teamId, userDate) {
     data.forEach(dataElement => {
         if (dataElement.teamId === teamId) {
-            let deadlines = generationTable(userDate);
+            let deadlines = createTable(userDate);
 
             dataElement.tasks.forEach(task => {
                 let time = task.time;
@@ -76,6 +76,7 @@ function createAllTasks(data, teamId, userDate) {
                     
                     let temp = '';
 
+                    /* Адрес и детали */
                     temp = document.getElementById('adress');
                     temp.innerHTML += getFullAdress(task.adress);
                     temp.removeAttribute('id');
@@ -120,7 +121,8 @@ function createAllTasks(data, teamId, userDate) {
     });    
 }
 
-function generationTable(userDate) {
+/* Создание недельной сетки для указанной даты */
+function createTable(userDate) {
     let table = document.getElementById('table');
 
     let firstDate = '';
@@ -132,6 +134,7 @@ function generationTable(userDate) {
         let templateTable = document.getElementById('table-template').content.cloneNode(true);
         table.append(templateTable);
 
+        /* Наименование дня */
         let temp = document.getElementById('day');
         temp.innerText = day.toUpperCase();
         temp.removeAttribute('id');
@@ -142,6 +145,7 @@ function generationTable(userDate) {
         }        
         lastDate = date;
 
+        /* Определние прошедших и текущего дня */
         temp = document.getElementById('template-table');
         if (date.getTime() < currentDate.getTime()) {
             temp.classList.add('form-body__element_last');
@@ -150,10 +154,12 @@ function generationTable(userDate) {
         }
         temp.removeAttribute('id');        
 
+        /* Дата */
         temp = document.getElementById('date');        
         temp.innerText = getFullDate(date);
         temp.removeAttribute('id');
         
+        /* Заполнение временных строк */
         let tableContent = document.getElementById('table-content');
         for (let i = 8; i <= 18; i++) {
             let templateTableRow = document.getElementById('table-template-row').content.cloneNode(true);   
@@ -175,6 +181,7 @@ function generationTable(userDate) {
     }
 }
 
+/* Получение даты и её недельного окружения */
 function getDate(index, date) {
     let currentDate = date ? date : new Date();
 
@@ -193,6 +200,7 @@ function getDate(index, date) {
     return currentDate;
 }
 
+/* Получение даты как строки */
 function getFullDate(date) {
     let fullDate = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
     fullDate += '.';
@@ -203,6 +211,7 @@ function getFullDate(date) {
     return fullDate;
 }
 
+/* Получение адреса */
 function getFullAdress(adress) {
     return `ул. ${adress.street}, д. ${adress.house}, корп. ${adress.housing}, кв. ${adress.flat}`;
 }
