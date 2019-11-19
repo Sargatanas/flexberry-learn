@@ -23,7 +23,7 @@ class Task {
         hour: 13,
         minute: 30
     }
-    let day = 'пн';
+    let day = 'mon';
     let place = document.getElementById(`${day}-${time.hour}`);
     let shift = (time.minute / 60) * 25;
     let size = 25 * task.timePlane - 20;
@@ -39,51 +39,56 @@ class Task {
                         </div>
                     </div>`;
 
-    place.innerHTML = template;             
+    /* place.innerHTML = template;  */
+    
 })();
 
 function generationTable() {
     let table = document.getElementById('table');
 
-    let week = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+    var week = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+    let weekEN = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-    week.forEach(templateDay => {
-        let rows = '';
+    week.forEach((day, index) => {
+        let templateTable = document.getElementById('table-template').content.cloneNode(true);
+        table.append(templateTable);
+
+        let temp = document.getElementById('day');
+        temp.innerText = day.toUpperCase();
+        temp.removeAttribute('id');
+
+        let date = getDate(week.length, index);
+        console.log(date);
+        
+        temp = document.getElementById('date');
+        temp.innerText = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
+        temp.innerText += '.';
+        temp.innerText += (date.getMonth() + 1) <= 9 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+        temp.innerText += '.';
+        temp.innerText += date.getFullYear();
+        temp.removeAttribute('id');
+        
+        let tableContent = document.getElementById('table-content');
         for (let i = 8; i <= 18; i++) {
-            let row = 
-                `<tr class="element-body__row">
-                    <td class="element-body__cell">
-                        ${i}:00
-                    </td>
-                    <td class="element-body__cell" id="${templateDay}-${i}"></td>
-                </tr>`;
-            rows += row;
+            let templateTableRow = document.getElementById('table-template-row').content.cloneNode(true);   
+            
+            tableContent.append(templateTableRow);
+            temp = document.getElementById('time');
+            temp.innerText = i < 9 ? '0' + i + ':00': i + ':00';
+            temp.removeAttribute('id');     
         }
-
-        let tableElementTemplate = 
-         `<div class="form-body__element">
-              <div class="element-header">
-                  <div class="element-header__cell element-header__cell_day">
-                      ${templateDay.toUpperCase()}
-                  </div>
-                  <div class="element-header__cell element-header__cell_data">
-                      18.11.2019
-                  </div>
-                  <div class="element-header__cell element-header__cell_total-tasks">
-                      Всего задач: 0
-                      </div></div>
-                 <table class="element-body">
-                     <tr class="element-body__row">
-                          <th class="element-body__cell">
-                              Время
-                          </th>
-                          <th class="element-body__cell">
-                              Детали задачи
-                           </th>
-                       </tr>
-                    ${rows}
-               </table>
-           </div> `;
-        table.innerHTML += tableElementTemplate;
+        tableContent.removeAttribute('id');  
     });
+}
+
+function getDate(totalIndex, index) {
+    let currentDate = new Date();
+
+    let currentDay = currentDate.getDay() - 1;
+    currentDay = currentDay === -1 ? 6: currentDay;
+
+    let dateShift = currentDay > index ? -(index + 1): (index - 1);
+    
+    currentDate.setDate(currentDate.getDate() + dateShift);
+    return currentDate;
 }
