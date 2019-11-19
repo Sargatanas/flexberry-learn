@@ -3,6 +3,7 @@
 const week = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
 const weekEN = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
+
 (async function () {
     let data = await loadJson();
     data = JSON.parse(data);
