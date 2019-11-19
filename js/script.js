@@ -70,7 +70,7 @@ var json = [
                 "details": "подключить новую раковину"
             },
             {
-                "date": "2019-11-26",
+                "date": "2019-11-29",
                 "time": {
                     "hours": "17",
                     "minutes": "00"
@@ -130,17 +130,30 @@ async function loadJson() {
 function createSchedule(data) {   
     let table = document.getElementById('table');
     table.innerHTML = '';
-    
+
     let teamId = document.getElementById('add-team-id').value;
 
+    let userDate = document.getElementById('add-date').value;
+    if (userDate === '') {
+        createAllTasks(data, teamId, new Date());
+    }
+    userDate = new Date(userDate);
+    if (String(userDate) !== 'Invalid Date') {
+        createAllTasks(data, teamId, userDate);
+    }
+};
+
+function createAllTasks(data, teamId, userDate) {
     data.forEach(dataElement => {
         if (dataElement.teamId === teamId) {
-            let deadlines = generationTable();
+            let deadlines = generationTable(userDate);
+
             dataElement.tasks.forEach(task => {
                 let time = task.time;
-                let date = getDate(0, -1, new Date(task.date));
+                let date = new Date(task.date);
+                date = getDate(date.getDay() - 1, date);
 
-                if (date >= deadlines.firstDate && date <= deadlines.lastDate) {
+                if (date.getTime() >= deadlines.firstDate.getTime() && date.getTime() <= deadlines.lastDate.getTime()) {
                     date.setHours(time.hours);
                     date.setMinutes(time.minutes);
 
@@ -193,14 +206,16 @@ function createSchedule(data) {
         }
                
     });    
-};
+}
 
-function generationTable() {
+function generationTable(userDate) {
     let table = document.getElementById('table');
 
     let firstDate = '';
     let lastDate = '';
 
+    let currentDate = getDate(userDate.getDay() - 1);
+    
     week.forEach((day, index) => {
         let templateTable = document.getElementById('table-template').content.cloneNode(true);
         table.append(templateTable);
@@ -209,11 +224,12 @@ function generationTable() {
         temp.innerText = day.toUpperCase();
         temp.removeAttribute('id');
 
-        let date = getDate(week.length, index);
-        firstDate  = firstDate === '' ? date : firstDate;
+        let date = getDate(index, userDate);
+        if (firstDate === '') {
+            firstDate = new Date(JSON.parse(JSON.stringify(date)));
+        }        
         lastDate = date;
 
-        let currentDate = getDate(0, -1);
         temp = document.getElementById('template-table');
         if (date.getTime() < currentDate.getTime()) {
             temp.classList.add('form-body__element_last');
@@ -247,7 +263,7 @@ function generationTable() {
     }
 }
 
-function getDate(totalIndex, index, date) {
+function getDate(index, date) {
     let currentDate = date ? date : new Date();
 
     currentDate.setHours(0);
@@ -258,9 +274,10 @@ function getDate(totalIndex, index, date) {
     let currentDay = currentDate.getDay() - 1;
     currentDay = currentDay === -1 ? 6: currentDay;
 
-    let dateShift = currentDay > index ? -(index + 1): (index - 1);
+    let dateShift = index - currentDay;
     
     currentDate.setDate(currentDate.getDate() + dateShift);
+
     return currentDate;
 }
 
